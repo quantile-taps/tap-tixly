@@ -8,6 +8,10 @@ from typing import List
 
 STREAM_TYPES = [
     streams.CustomersStream,
+    streams.MembershipsStream,
+    streams.MembershipsSalesStream,
+    streams.EventsStream,
+    streams.EventsSalesStream,
 ]
 
 
@@ -20,7 +24,7 @@ class TapTixly(Tap):
             "auth_token",
             th.StringType,
             required=True,
-            secret=True,  # Flag config as protected.
+            secret=True,
             description="The token to authenticate against the API service",
         ),
         th.Property(
@@ -31,7 +35,7 @@ class TapTixly(Tap):
         th.Property(
             "url_base",
             th.StringType,
-            default="https://crmapi.tixnl.nl/v3/",
+            default="https://crmapi.tixnl.nl/v3",
             description="The base url for the API service for Tixly.",
         ),
     ).to_dict()

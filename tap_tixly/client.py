@@ -65,26 +65,3 @@ class TixlyStream(RESTStream):
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
         """Parse the response and return an iterator of result records."""
         yield from extract_jsonpath(self.records_jsonpath, input=response.json())
-
-    def post_process(
-        self,
-        row: dict,
-        context: dict,
-    ) -> dict:
-        """
-        We introduce this post process method due to finding the correct replication value.
-
-        The desired replication key exists in either the "Edited" or "Created" column. This
-        is because newly added records only contain a "Created" value and not an "Edited"
-        value. The "Edited" column contains a null (parsed to None) for newly created records.
-        """
-        if row["Edited"] == None:
-            _updated_at = row["Created"]
-
-        else:
-            _updated_at = row["Edited"]
-
-        return {
-            **row,
-            "_updated_at": _updated_at,
-        }

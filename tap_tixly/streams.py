@@ -162,11 +162,9 @@ class EventsSalesStream(TixlyStream):
 
     name = "event_sales"
     path = "/events/sales"
-    primary_keys = ["Id"]
     replication_key = "Created"
 
     schema = th.PropertiesList(
-        th.Property("Id", th.IntegerType),
         th.Property("TicketId", th.IntegerType),
         th.Property("EventId", th.IntegerType),
         th.Property("CustomerId", th.IntegerType),

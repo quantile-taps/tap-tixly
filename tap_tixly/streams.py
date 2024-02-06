@@ -70,7 +70,6 @@ class CustomersStream(TixlyStream):
         }
 
 
-
 class MembershipsStream(TixlyStream):
     """This stream fetches all memberships data."""
 
@@ -97,7 +96,7 @@ class MembershipsStream(TixlyStream):
 class MembershipsSalesStream(TixlyStream):
     """This stream fetches all the memberships sales data."""
 
-    name = "memberships-sales"
+    name = "memberships_sales"
     path = "/memberships/sales"
     primary_keys = ["Id"]
 
@@ -159,9 +158,9 @@ class EventsStream(TixlyStream):
 
 
 class EventsSalesStream(TixlyStream):
-    """This stream fetches all the events."""
+    """This stream fetches all the event sales."""
 
-    name = "events-sale"
+    name = "event_sales"
     path = "/events/sales"
     primary_keys = ["Id"]
     replication_key = "Created"

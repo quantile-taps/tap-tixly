@@ -93,10 +93,10 @@ class MembershipsStream(TixlyStream):
     ).to_dict()
 
 
-class MembershipsSalesStream(TixlyStream):
-    """This stream fetches all the memberships sales data."""
+class MembershipSalesStream(TixlyStream):
+    """This stream fetches all the membership sales data."""
 
-    name = "memberships_sales"
+    name = "membership_sales"
     path = "/memberships/sales"
     primary_keys = ["Id"]
 
@@ -157,7 +157,7 @@ class EventsStream(TixlyStream):
     ).to_dict()
 
 
-class EventsSalesStream(TixlyStream):
+class EventSalesStream(TixlyStream):
     """This stream fetches all the event sales."""
 
     name = "event_sales"

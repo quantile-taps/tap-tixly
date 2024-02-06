@@ -9,9 +9,9 @@ from typing import List
 STREAM_TYPES = [
     streams.CustomersStream,
     streams.MembershipsStream,
-    streams.MembershipsSalesStream,
+    streams.MembershipSalesStream,
     streams.EventsStream,
-    streams.EventsSalesStream,
+    streams.EventSalesStream,
 ]
 
 

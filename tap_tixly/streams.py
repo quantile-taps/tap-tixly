@@ -87,8 +87,8 @@ class MembershipsStream(TixlyStream):
         th.Property("Price", th.NumberType),
         th.Property("Vat", th.NumberType),
         th.Property("AvailableOnline", th.BooleanType),
-        th.Property("RenewDayOfMonth", th.StringType),
-        th.Property("RenewMonthOfYear", th.StringType),
+        th.Property("RenewDayOfMonth", th.NumberType),
+        th.Property("RenewMonthOfYear", th.NumberType),
         th.Property("Created", th.DateTimeType),
     ).to_dict()
 

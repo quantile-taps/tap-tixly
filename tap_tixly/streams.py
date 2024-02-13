@@ -162,6 +162,7 @@ class EventSalesStream(TixlyStream):
 
     name = "event_sales"
     path = "/events/sales"
+    primary_keys = ["TicketId", "EventId", "CustomerId", "OrderId", "is_returned"]
     replication_key = "Created"
 
     schema = th.PropertiesList(
@@ -187,4 +188,24 @@ class EventSalesStream(TixlyStream):
         th.Property("SkinID", th.IntegerType),
         th.Property("OrganisationID", th.IntegerType),
         th.Property("Created", th.DateTimeType),
+        th.Property("is_returned", th.BooleanType),
     ).to_dict()
+
+    def post_process(
+        self,
+        row: dict,
+        context: dict | None = None,  # noqa: ARG002
+    ) -> dict | None:
+        """
+        Adds indicator whether tickets were sold or returned for the event.
+
+        Args:
+            row: Individual record in the stream.
+            context: Stream partition or context dictionary.
+
+        Returns:
+            The resulting record dict, or `None` if the record should be excluded.
+        """
+        row["is_returned"] = row["TicketCount"] < 0
+
+        return row

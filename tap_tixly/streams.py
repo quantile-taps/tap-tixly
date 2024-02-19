@@ -8,6 +8,7 @@ import typing as t
 from singer_sdk import typing as th  # JSON Schema typing helpers
 
 from tap_tixly.client import TixlyStream
+from urllib.parse import parse_qsl
 
 if sys.version_info >= (3, 9):
     import importlib.resources as importlib_resources
@@ -209,3 +210,19 @@ class EventSalesStream(TixlyStream):
         row["is_returned"] = row["TicketCount"] < 0
 
         return row
+
+    def get_url_params(self, context, next_page_token):
+        params = {
+            "pageSize": 500,
+        }
+
+        # Next page token is a URL, so we can to parse it to extract the query string
+        if next_page_token:
+            params.update(parse_qsl(next_page_token.query))
+
+        if self.replication_key:
+            start_time = self.get_starting_timestamp(context)
+            start_time_fmt = start_time.strftime("%Y-%m-%dT%H:%M:%SZ") if start_time else None
+            params["SoldFrom"] = start_time_fmt
+
+        return params

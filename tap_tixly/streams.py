@@ -155,6 +155,17 @@ class EventsStream(TixlyStream):
         th.Property("Allocated", th.IntegerType),
         th.Property("BlockedAllocated", th.IntegerType),
         th.Property("Vat", th.NumberType),
+        th.Property("ExternalReferenceNumber", th.IntegerType),
+        th.Property("DepartmentNumber", th.IntegerType),
+        th.Property("AccountNumber", th.IntegerType),
+        th.Property("OrganisationId", th.IntegerType),
+        th.Property("VenueId", th.IntegerType),
+        th.Property("Venue", th.StringType),
+        th.Property("EventGroupId", th.IntegerType),
+        th.Property("EventGroup", th.StringType),
+        th.Property("IsNumbered", th.BooleanType),
+        th.Property("IsFreeEvent", th.BooleanType),
+        th.Property("SaleStatusId", th.IntegerType),
     ).to_dict()
 
 
@@ -163,10 +174,11 @@ class EventSalesStream(TixlyStream):
 
     name = "event_sales"
     path = "/events/sales"
-    primary_keys = ["TicketId", "EventId", "CustomerId", "OrderId", "is_returned"]
+    primary_keys = ["SaleTicketId"]
     replication_key = "Created"
 
     schema = th.PropertiesList(
+        th.Property("SaleTicketId", th.IntegerType),
         th.Property("TicketId", th.IntegerType),
         th.Property("EventId", th.IntegerType),
         th.Property("CustomerId", th.IntegerType),

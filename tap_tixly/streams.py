@@ -155,7 +155,7 @@ class EventsStream(TixlyStream):
         th.Property("Allocated", th.IntegerType),
         th.Property("BlockedAllocated", th.IntegerType),
         th.Property("Vat", th.NumberType),
-        th.Property("ExternalReferenceNumber", th.IntegerType),
+        th.Property("ExternalReferenceNumber", th.StringType),
         th.Property("DepartmentNumber", th.IntegerType),
         th.Property("AccountNumber", th.IntegerType),
         th.Property("OrganisationId", th.IntegerType),

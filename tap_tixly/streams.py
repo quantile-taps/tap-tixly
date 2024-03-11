@@ -1,13 +1,11 @@
 """Stream type classes for tap-tixly."""
-
 from __future__ import annotations
 
 import sys
-import typing as t
 
 from singer_sdk import typing as th  # JSON Schema typing helpers
 
-from tap_tixly.client import TixlyStream
+from tap_tixly.client import TixlyStream, TixlyEventSalesPaginator
 from urllib.parse import parse_qsl
 
 if sys.version_info >= (3, 9):
@@ -228,13 +226,19 @@ class EventSalesStream(TixlyStream):
             "pageSize": 500,
         }
 
+        if self.replication_key and not next_page_token:
+            start_time = self.get_starting_timestamp(context)
+            start_time_fmt = start_time.strftime("%Y-%m-%dT%H:%M:%SZ") if start_time else None
+
+            params["SoldFrom"] = start_time_fmt
+            params["SoldTo"] = start_time.add(months=1).strftime("%Y-%m-%dT%H:%M:%SZ") 
+
         # Next page token is a URL, so we can to parse it to extract the query string
         if next_page_token:
             params.update(parse_qsl(next_page_token.query))
 
-        if self.replication_key:
-            start_time = self.get_starting_timestamp(context)
-            start_time_fmt = start_time.strftime("%Y-%m-%dT%H:%M:%SZ") if start_time else None
-            params["SoldFrom"] = start_time_fmt
-
         return params
+    
+    def get_new_paginator(self) -> TixlyEventSalesPaginator:
+        return TixlyEventSalesPaginator()
+    

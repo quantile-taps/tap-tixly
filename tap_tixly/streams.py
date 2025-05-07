@@ -7,6 +7,7 @@ from singer_sdk import typing as th  # JSON Schema typing helpers
 
 from tap_tixly.client import TixlyStream, TixlyEventSalesPaginator
 from urllib.parse import parse_qsl
+import pendulum
 
 if sys.version_info >= (3, 9):
     import importlib.resources as importlib_resources
@@ -227,7 +228,7 @@ class EventSalesStream(TixlyStream):
         }
 
         if self.replication_key and not next_page_token:
-            start_time = self.get_starting_timestamp(context)
+            start_time = pendulum.instance(self.get_starting_timestamp(context))
             start_time_fmt = start_time.strftime("%Y-%m-%dT%H:%M:%SZ") if start_time else None
 
             params["SoldFrom"] = start_time_fmt

@@ -12,6 +12,8 @@ STREAM_TYPES = [
     streams.MembershipSalesStream,
     streams.EventsStream,
     streams.EventSalesStream,
+    streams.DonationTypesStream,
+    streams.DonationSalesStream,
 ]
 
 

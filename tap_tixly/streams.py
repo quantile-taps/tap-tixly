@@ -243,3 +243,69 @@ class EventSalesStream(TixlyStream):
     def get_new_paginator(self) -> TixlyEventSalesPaginator:
         return TixlyEventSalesPaginator()
     
+
+class DonationTypesStream(TixlyStream):
+    """This stream fetches all the donation types data."""
+
+    name = "donations"
+    path = "/donations"
+    primary_keys = ["Id"]
+
+    schema = th.PropertiesList(
+        th.Property("Id", th.IntegerType),
+        th.Property("Name", th.StringType),
+        th.Property("Abbreviation", th.StringType),
+        th.Property("Tagline", th.StringType),
+        th.Property("ShortDescription", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Price", th.NumberType),
+        th.Property("Vat", th.NumberType),
+        th.Property("AvailableOnline", th.BooleanType),
+        th.Property("RenewDayOfMonth", th.IntegerType),
+        th.Property("RenewMonthOfYear", th.IntegerType),
+        th.Property("Created", th.DateTimeType),
+    ).to_dict()
+
+
+class DonationSalesStream(TixlyStream):
+    """This stream fetches all the donation sales data."""
+
+    name = "donation_sales"
+    path = "/donations/sales"
+    primary_keys = ["Id"]
+    replication_key = "Created"
+
+    schema = th.PropertiesList(
+        th.Property("Id", th.IntegerType),
+        th.Property("SaleMembershipId", th.IntegerType),
+        th.Property("OrderMembershipId", th.IntegerType),
+        th.Property("OrderId", th.IntegerType),
+        th.Property("MembershipID", th.IntegerType),
+        th.Property("MembershipId", th.IntegerType),
+        th.Property("CustomerId", th.IntegerType),
+        th.Property("IsAnonymousSale", th.BooleanType),
+        th.Property("MembershipCount", th.IntegerType),
+        th.Property("Name", th.StringType),
+        th.Property("Abbreviation", th.StringType),
+        th.Property("Tagline", th.StringType),
+        th.Property("ShortDescription", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Price", th.NumberType),
+        th.Property("Vat", th.NumberType),
+        th.Property("Online", th.BooleanType),
+        th.Property("RenewDayOfMonth", th.IntegerType),
+        th.Property("RenewMonthOfYear", th.IntegerType),
+        th.Property("isCancelled", th.BooleanType),
+        th.Property("IsCancelled", th.BooleanType),
+        th.Property("SkinID", th.IntegerType),
+        th.Property("SkinId", th.IntegerType),
+        th.Property("OrganisationID", th.IntegerType),
+        th.Property("SaleOrganisationId", th.IntegerType),
+        th.Property("MembershipOrganisationId", th.IntegerType),
+        th.Property("RenewalType", th.StringType),
+        th.Property("SaleUserId", th.IntegerType),
+        th.Property("SaleUserName", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Expires", th.DateTimeType),
+        th.Property("OrderUrl", th.StringType),
+    ).to_dict()
